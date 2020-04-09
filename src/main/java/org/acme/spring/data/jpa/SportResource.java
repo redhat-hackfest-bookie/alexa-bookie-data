@@ -56,12 +56,12 @@ public class SportResource {
 
     @PUT
     @Path("/update/{sport}")
-    public Sport updateCount(@PathParam String sport){
+    public void updateCount(@PathParam String sport){
         List<Sport> sports = sportRepository.findByName(sport);
         if(!sports.isEmpty()){
             Sport league = sports.get(0);
             league.setHitCount(league.getHitCount() + 1);
-            return sportRepository.save(league);
+            sportRepository.save(league);
         }
 
         throw new IllegalArgumentException("Sport does not exist:  " + sport);
