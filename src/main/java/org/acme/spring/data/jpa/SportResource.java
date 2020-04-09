@@ -54,6 +54,18 @@ public class SportResource {
         throw new IllegalArgumentException("No Sport with id " + id + " exists");
     }
 
+    @Path("/update/{sport}")
+    public Sport updateCount(@PathParam String sport){
+        List<Sport> sports = sportRepository.findByName(sport);
+        if(!sports.isEmpty()){
+            Sport league = sports.get(0);
+            league.setHitCount(league.getHitCount() + 1);
+            return sportRepository.save(league);
+        }
+
+        throw new IllegalArgumentException("Sport does not exist:  " + sport);
+    }
+
     @GET
     @Path("/sport/{sport}")
     @Produces("application/json")
