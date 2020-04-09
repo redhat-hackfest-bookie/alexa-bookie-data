@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
@@ -57,15 +58,16 @@ public class SportResource {
     @PUT
     @Path("/update/{sport}")
     @Produces("application/json")
-    public Sport updateCount(@PathParam String sport){
+    public Response.ResponseBuilder updateCount(@PathParam String sport){
         List<Sport> sports = sportRepository.findByName(sport);
         if(!sports.isEmpty()){
             Sport league = sports.get(0);
             league.setHitCount(league.getHitCount() + 1);
-            return sportRepository.save(league);
+            sportRepository.save(league);
+            return Response.ok();
         }
 
-        throw new IllegalArgumentException("Sport does not exist:  " + sport);
+        return Response.ok();
     }
 
     @GET
