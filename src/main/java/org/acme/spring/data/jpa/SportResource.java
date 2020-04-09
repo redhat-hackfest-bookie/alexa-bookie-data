@@ -54,6 +54,7 @@ public class SportResource {
         throw new IllegalArgumentException("No Sport with id " + id + " exists");
     }
 
+    @PUT
     @Path("/update/{sport}")
     public Sport updateCount(@PathParam String sport){
         List<Sport> sports = sportRepository.findByName(sport);
